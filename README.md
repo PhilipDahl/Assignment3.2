@@ -11,7 +11,7 @@ For This assignment we were required to create a step-by-step instructions page 
     sudo mkdir -p /var/lib/webgen/bin /var/lib/webgen/HTML
     sudo chown -R webgen:webgen /var/lib/webgen
     ```
-?1
+
 ### Task 2: Create and Configure Systemd Service and Timer
 1. Create the `generate-index.service` file at `/etc/systemd/system/generate-index.service`:
     ```ini
@@ -29,8 +29,6 @@ For This assignment we were required to create a step-by-step instructions page 
     WantedBy=multi-user.target
     ```
 
-?2
-
 2. Create the `generate-index.timer` file at `/etc/systemd/system/generate-index.timer`:
     ```ini
     [Unit]
@@ -43,8 +41,6 @@ For This assignment we were required to create a step-by-step instructions page 
     [Install]
     WantedBy=timers.target
     ```
-
-?3
 
 3. Enable and start the timer:
     ```bash
@@ -62,6 +58,10 @@ For This assignment we were required to create a step-by-step instructions page 
     user webgen;
     ```
 
+1.1. Create the sites-available directory and the sites enabled directory so that we can make our seperate server block files. 
+    mkdir /etc/nginx/sites-available/
+    mkdir /etc/nginx/sites-enabled/
+
 2. Create a separate server block file at `/etc/nginx/sites-available/webgen`:
     ```nginx
     server {
@@ -77,8 +77,6 @@ For This assignment we were required to create a step-by-step instructions page 
     }
     ```
 
-?4
-
 3. Enable the configuration by creating a symbolic link:
     ```bash
     sudo ln -s /etc/nginx/sites-available/webgen /etc/nginx/sites-enabled/
@@ -91,7 +89,6 @@ For This assignment we were required to create a step-by-step instructions page 
 - Reload Nginx: `sudo systemctl reload nginx`
 - Check Nginx status: `sudo systemctl status nginx`
 
-?5
 
 ### Task 4: Configure UFW Firewall
 1. Install and configure UFW:
@@ -124,8 +121,6 @@ Visit your server's IP address in a browser to view the system information page.
     - **Type**: External (public)
     - **Tag**: "web"
 
-?6
-
 ### Login to each individual droplet
 
 ssh -i .ssh\directory\of\private-key user@<ip_address>
@@ -137,7 +132,6 @@ There are some important packages that are essential to the success of this assi
 2) sudo pacman -S nginx
 3) sudo pacman -S git
 4) sudo pacman -S ufw
-
 
 ### Task 3: Clone Updated Starter Code
 1. Clone the updated starter code repository containing the updated `generate_index` script.
@@ -182,8 +176,12 @@ then do the same for file two except name it "file two"
     sudo nginx -t
     sudo systemctl reload nginx
     ```
+4. See Results!
 
-
+Access the Droplets' Public IP Addresses:
+Visit http://<droplet1-public-ip> and http://<droplet2-public-ip> in your web browser.
+You should see the system specs on the main page (index.html).
+Visit http://<droplet1-public-ip>/documents and http://<droplet2-public-ip>/documents to see the list of files and their contents.
 ---
 
 
